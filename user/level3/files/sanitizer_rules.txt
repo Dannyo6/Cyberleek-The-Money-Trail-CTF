@@ -1,0 +1,38 @@
+-- ====================================================================
+-- $CYBERLEEK APPLICATION GATEWAY // INPUT SANITIZER SPECIFICATION
+-- RECOVERED FROM DEPLOYMENT REPOSITORY
+-- ====================================================================
+
+-- 1. Active Web Application Firewall (WAF) Rule:
+-- Prohibited Characters:
+--   - ASCII 0x20 (Raw Space ' ')
+--   - ASCII 0x09 (Horizontal Tab)
+-- Naive payloads like "' OR 1=1 --" are automatically intercepted.
+--
+-- Security Note:
+-- "Developers must use parameter binding. If concatenating strings,
+-- ensure that whitespace substitution via SQL block comments (/**/)
+-- does not allow logic manipulation."
+
+-- 2. Relevant Schema Fragments:
+CREATE TABLE node_operators (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    operator_id TEXT UNIQUE,
+    handle TEXT,
+    clearance_level INTEGER,
+    role TEXT,
+    signature_hash TEXT
+);
+
+CREATE TABLE public_ledger (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tx_id TEXT UNIQUE,
+    sender TEXT,
+    recipient TEXT,
+    amount TEXT,
+    memo TEXT
+);
+
+-- [!] NOTICE: Primary escrow reserves and high-value transaction drops
+-- are sequestered in dedicated internal tables.
+-- ====================================================================

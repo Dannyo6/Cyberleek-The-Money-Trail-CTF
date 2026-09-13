@@ -1,0 +1,36 @@
+====================================================================
+CYBERLEEK INCIDENT RESPONSE // PERIMETER RECONNAISSANCE SCOPE
+CASE FILE: EVIDENCE 05 - THE ATTENTION ECONOMY / THE MONEY TRAIL
+TARGET IDENTIFIER: $CYBERLEEK Auxiliary Transaction Gateway
+====================================================================
+
+OPERATIONAL BRIEFING:
+Forensic analysis of the August 2026 GTA VI leak monetization campaign
+has isolated dedicated transaction settlement infrastructure operated
+by threat actor $CYBERLEEK. While public web services have been purged,
+an auxiliary transaction gateway remains operational on a high-order port.
+
+INVESTIGATION OBJECTIVES:
+1. Conduct full-spectrum TCP reconnaissance scanning against the target.
+2. Locate and verify the active auxiliary gateway listening on port 9042.
+3. Connect and interrogate the diagnostic service banner to extract the
+   initial reconnaissance telemetry signature.
+
+TARGET SPECIFICATION:
+- Network Identifier : target.cyberleek.lan
+- Local/Loopback IP  : 127.0.0.1
+- Port Scope         : Non-standard TCP service ports (1024 - 65535)
+- Active Service     : Auxiliary Transaction Gateway (9042/TCP)
+
+RECOMMENDED RECONNAISSANCE METHODOLOGY:
+- Full port discovery:
+    nmap -sS -p- --min-rate 1000 -T4 127.0.0.1
+- Service banner inspection:
+    nmap -sV -sC -p 9042 127.0.0.1
+
+FLAG RECOVERY NOTE:
+The Level 1 diagnostic signature is transmitted directly inside the
+gateway's initial ASCII connection banner upon TCP socket handshake.
+
+STATUS: TARGET PERIMETER ACTIVE
+====================================================================

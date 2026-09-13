@@ -1,0 +1,25 @@
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Environment & OS files
+.venv/
+venv/
+.env
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+.idea/
+.vscode/
+
+# Explicitly track essential CTF databases, distributions, and files:
+!admin/evidence_bundle.zip
+!admin/service/cyberleek_ledger.db
+!*.log
+!*.txt
+!*.md
+!Dockerfile
+!docker-compose.yml

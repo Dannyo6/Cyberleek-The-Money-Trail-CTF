@@ -1,0 +1,44 @@
+====================================================================
+CYBERLEEK TERMINAL PROTOCOL // INTERACTION SPECIFICATIONS
+CASE FILE: EVIDENCE 05 - THE ATTENTION ECONOMY / THE MONEY TRAIL
+TARGET PORT: 9042/TCP
+====================================================================
+
+PROTOCOL SUMMARY:
+The $CYBERLEEK Auxiliary Transaction Gateway is a raw TCP streaming
+daemon. Unlike HTTP/REST services, it accepts line-buffered ASCII text
+directives terminated with standard newlines (\n).
+
+SECURITY HANDSHAKE REQUIREMENT:
+The daemon operates with an active Handshake Guard. Raw connection drops
+into pre-session state ('[PRE-SESSION]> '). To establish interactive
+operator command mode, participants must transmit the session initiation
+packet:
+    INIT_TRANSACTION_SESSION
+
+CONNECTION TOOLS:
+1. Netcat (Direct interactive streaming):
+   nc -nv 127.0.0.1 9042
+   
+2. Ncat / Telnet (Line-buffered terminal alternatives):
+   ncat 127.0.0.1 9042
+   telnet 127.0.0.1 9042
+
+3. Python Socket Automation:
+   import socket
+   s = socket.create_connection(('127.0.0.1', 9042))
+   # Step 1: Complete Handshake
+   s.sendall(b'INIT_TRANSACTION_SESSION\n')
+   # Step 2: Issue Directives
+   s.sendall(b'HELP\n')
+   print(s.recv(4096).decode('utf-8'))
+
+CORE RULES & BUFFER CONSTRAINTS:
+- Directives must be non-empty and UTF-8 encoded.
+- Maximum input threshold: 2048 bytes per line. Overrunning this limit
+  triggers immediate defense termination.
+- Discover available commands using the built-in 'HELP' directive.
+- Unreleased maintenance/diagnostic routines can override default locks.
+
+STATUS: OPERATIONAL PROTOCOL ACTIVE
+====================================================================

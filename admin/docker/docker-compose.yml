@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  cyberleek_aux_gateway:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: cyberleek_money_trail_gateway
+    restart: unless-stopped
+    ports:
+      - "9042:9042"
+    environment:
+      - BIND_HOST=0.0.0.0
+      - BIND_PORT=9042
+    networks:
+      cyberleek_net:
+        aliases:
+          - target.cyberleek.lan
+
+networks:
+  cyberleek_net:
+    driver: bridge

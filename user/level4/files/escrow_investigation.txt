@@ -1,0 +1,42 @@
+====================================================================
+CYBERLEEK FORENSIC INTELLIGENCE // ESCROW EXFILTRATION DIRECTIVE
+CASE FILE: EVIDENCE 05 - THE ATTENTION ECONOMY / THE MONEY TRAIL
+TARGET SUBSYSTEM: Escrow Ledger Query Console & Sequestered Vault
+====================================================================
+
+INTELLIGENCE ASSESSMENT:
+Authenticated operator sessions gain access to the Escrow Transaction
+Query Console ('QUERY'). Standard lookups against `public_ledger` by
+Transaction ID (`tx_id`) project 4 data columns:
+  Column 1: tx_id (TEXT)
+  Column 2: sender (TEXT)
+  Column 3: recipient (TEXT)
+  Column 4: memo (TEXT)
+
+SEQUESTERED REPOSITORY SPECIFICATION:
+Staging configuration traces identify the primary escrow distribution
+table storing the monetization reserves and master transaction key:
+  Table Name: cyberleek_escrow_ledger
+  Columns   : id, tx_id, sender, recipient, amount, secret_clearance
+
+The authoritative case flag is stored within the `secret_clearance`
+column of the primary GTA VI monetization drop transaction.
+
+EXPLOITATION STRATEGY:
+1. Column Count & Projection Discovery:
+   Probe the active query using `ORDER BY <N> --` or trial null projections
+   to confirm the query requires exactly 4 columns.
+2. Multi-Column UNION Formulation:
+   Construct a SQL `UNION SELECT` query matching the 4-column projection,
+   pulling `tx_id`, `sender`, `recipient`, and `secret_clearance` from
+   the hidden `cyberleek_escrow_ledger` table.
+3. Payload Construction:
+   Escape the string delimiter and terminate trailing syntax with `--`.
+
+FLAG IDENTIFICATION:
+The exfiltrated token strictly follows the authoritative format:
+CYBERLEEK{...}
+
+POST-ROUND TRANSITION:
+"The money trail ends at the final artifact. Whatever is inside it was deliberately protected."
+====================================================================

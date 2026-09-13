@@ -1,0 +1,26 @@
+====================================================================
+CYBERLEEK SECURITY AUDIT // OPERATOR AUTHENTICATION DIAGNOSTICS
+CASE FILE: EVIDENCE 05 - THE ATTENTION ECONOMY / THE MONEY TRAIL
+TARGET SUBSYSTEM: Operator Gatekeeper Portal ('AUTH')
+====================================================================
+
+SYSTEM ARCHITECTURE:
+To query the internal $CYBERLEEK transaction ledger, participants must
+clear the Operator Gatekeeper Authentication Portal ('AUTH').
+
+Standard operator access requires a registered Operator Key ID (e.g.,
+'OP-0992'). In the absence of valid syndicate credentials, participants
+must analyze the query verification mechanism and active WAF rules.
+
+VULNERABILITY CHARACTERISTICS:
+- Backend Database: SQLite (`cyberleek_ledger.db`).
+- Query Formulation: Dynamic SQL string concatenation without input
+  parameterization.
+- Error Behavior: Verbose SQLite database OperationalErrors are returned
+  over the socket connection, providing immediate syntax feedback.
+
+OBJECTIVE:
+Formulate an authentication bypass payload that evades the input WAF
+filter and manipulates the SQL Boolean evaluation logic, unlocking
+administrative operator clearance without a known key.
+====================================================================
